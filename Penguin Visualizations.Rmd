@@ -120,10 +120,10 @@ penguins %>%
   drop_na() %>% 
   ggplot(aes(color = species, x = flipper_length_mm, y = species)) +
   geom_dotplot(alpha = 0.4) +
-  geom_smooth(se = FALSE, method='lm') +
-labs(title = "Penguin Body Mass and Sex",
-       x = "Body Mass (g)",
-       y = "Sex (M/F)",
+  geom_smooth(se = FALSE) +
+labs(title = "Penguin Flipper Length by Species",
+       x = "Flipper Length (mm)",
+       y = "Species",
        fill = "Species") + 
   scale_color_manual(values = c("darkorange","purple","cyan4")) + 
   theme_set(theme_bw()) +
@@ -142,7 +142,15 @@ You can see examples by looking at the graphics labeled `bar1.png`, `bar2.png`, 
 
 
 ```{r}
-# add code here
+penguins %>% 
+  ggplot(aes(x = island)) + 
+  geom_bar(aes(fill = species), alpha = 0.35) +
+  labs(title = "Penguins per Species per Island", 
+       x = "Islands", 
+       y = "Number of Penguins", 
+       fill = "Species") + 
+  scale_fill_manual(values = c("darkorange","purple","cyan4"))
+  ggsave(filename = "islands_juanramirez.png")
 ```
 
 
