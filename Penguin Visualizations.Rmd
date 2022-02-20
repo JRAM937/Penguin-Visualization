@@ -29,13 +29,13 @@ For each line of code, comment on what that line of code is doing to the visuali
 ```{r}
 penguins %>% 
   drop_na(bill_length_mm) %>% #drops missing values from bill length variable
-  ggplot(aes(x = bill_length_mm)) +  #comment
-  geom_density(aes(fill = species), alpha = 0.35) + #comment
-  labs(title = "Penguin Culmen Length", #comment
-       x = "Culmen Length (mm)", #comment
-       y = "Number of Penguins", #comment
-       fill = "Species") + #comment
-  scale_fill_manual(values = c("darkorange","purple","cyan4")) #comment
+  ggplot(aes(x = bill_length_mm)) +  #Initialize a plot
+  geom_density(aes(fill = species), alpha = 0.35) + #Plot each species' bill length with relation to density
+  labs(title = "Penguin Culmen Length", #set plot title
+       x = "Culmen Length (mm)", #title for x axis of the plot
+       y = "Number of Penguins", #title for y axis of the plot
+       fill = "Species") + #each species has a unique fill color
+  scale_fill_manual(values = c("darkorange","purple","cyan4")) #manually sets colors for each item in the plot
 ```
 
 
@@ -58,9 +58,17 @@ The final graph should look like
 ```{r}
 penguins %>% 
   drop_na() %>% 
-  ggplot(aes(x = bill_length_mm, y = bill_depth_mm)) +
-  geom_point() +
-  geom_smooth(se = FALSE)
+  ggplot(aes(color = species, x = bill_length_mm, y = bill_depth_mm)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(se = FALSE, method='lm') +
+labs(title = "Penguin Culmen Length and Depth",
+       x = "Culmen Length (mm)",
+       y = "Number of Penguins",
+       fill = "Species") + 
+  scale_color_manual(values = c("darkorange","purple","cyan4")) + 
+  theme_set(theme_minimal()) +
+  facet_grid(. ~ species)
+  ggsave(filename="culmen_depth_juanramirez.png", width=6, height=4)
 ```
 
 
@@ -83,7 +91,20 @@ Create a data visualization of boxplots to compare body mass by species and sex.
 
 
 ```{r}
+penguins %>% 
+  drop_na() %>% 
+  ggplot(aes(color = species, x = body_mass_g, y = sex)) +
+  geom_boxplot(alpha = 0.4) +
+  geom_smooth(se = FALSE, method='lm') +
+labs(title = "Penguin Body Mass and Sex",
+       x = "Body Mass (g)",
+       y = "Sex (M/F)",
+       fill = "Species") + 
+  scale_color_manual(values = c("darkorange","purple","cyan4")) + 
+  theme_set(theme_bw()) +
+  facet_grid(. ~ species)
 
+  ggsave(filename="body_mass_juanramirez.png", width=6, height=3)
 ```
 
 
@@ -95,7 +116,20 @@ Create a data visualization of boxplots to compare body mass by species and sex.
 Create a visualization (your choice of geometry) to compare flipper length between species, use the same color choices as before.  Bonus, include a comparison between sex.  As always, include appropriate labels and choose an alternative theme of your choice. Export as "flipper_length_yourname.jpg".  
 
 ```{r}
-# add code here
+penguins %>% 
+  drop_na() %>% 
+  ggplot(aes(color = species, x = flipper_length_mm, y = species)) +
+  geom_dotplot(alpha = 0.4) +
+  geom_smooth(se = FALSE, method='lm') +
+labs(title = "Penguin Body Mass and Sex",
+       x = "Body Mass (g)",
+       y = "Sex (M/F)",
+       fill = "Species") + 
+  scale_color_manual(values = c("darkorange","purple","cyan4")) + 
+  theme_set(theme_bw()) +
+  facet_grid(. ~ species)
+
+  ggsave(filename="flipper_length_juanramirez.png")
 ```
 
 
